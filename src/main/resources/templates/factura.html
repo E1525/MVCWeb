@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        
+    </head>
+    <body>
+        
+        <h1 class="text-center text-primary mb-4"> Registro Facturas</h1>
+        
+         <p th:if ="${error}"  th:text ="${error}" ></p>
+         
+  <div class="card mx-auto shadow" style="max-width: 1000px;">
+    <div class="card-body">
+
+        <form th:action="@{/factura/guardar}"
+              th:object="${factura}"
+              method="post">
+
+            <input type="hidden" th:field="*{idFactura}" />
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label>ID Cliente:</label>
+                    <input class="form-control form-control-sm"
+                           type="text"
+                           th:field="*{idCliente}" />
+                </div>
+
+                <div class="col-md-3">
+                    <label>ID Empleado:</label>
+                    <input class="form-control form-control-sm"
+                           type="text"
+                           th:field="*{idEmpleado}" />
+                </div>
+
+                <div class="col-md-3">
+                    <label>Fecha:</label>
+                    <input class="form-control form-control-sm"
+                           type="datetime-local"
+                           th:field="*{fecha}" />
+                </div>
+
+                <div class="col-md-3">
+                    <label>Total a Pagar:</label>
+                    <input class="form-control form-control-sm"
+                           type="text"
+                           th:field="*{total}" />
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="btn btn-success" type="submit">
+                Guardar
+            </button>
+
+        </form>
+
+    </div>
+</div>
+         
+          <div class="table-responsive mx-auto" style="max-width: 1000px;">
+         <table class="table table-success table-striped">
+            <tr>
+                <th>ID Factura</th>
+                <th>ID Cliente</th>
+                <th>ID Empleado</th>
+                <th>Fecha</th>
+                <th>Total Q </th>
+                <th>Acciones</th>
+     
+            </tr>
+            
+                <tr th:each="c : ${facturas}">
+                <td th:text="${c.idFactura}"></td>
+                <td th:text="${c.idCliente}"></td>
+                <td th:text="${c.idEmpleado}"></td>
+                <td th:text="${c.fecha}"></td>
+                <td th:text="${c.total}"></td>
+                
+                <td>
+                     <div class="d-flex gap-2">
+                   
+                    <a class="btn btn-outline-dark"
+                        th:href="@{/factura/editar/{id} (id=${c.idFactura})} "> 
+                        Editar
+                    </a>
+                    <form th:action="@{/factura/eliminar/{id} (id=${c.idFactura})} " method ="post">
+                        <button class="btn btn-outline-danger"
+                            type="submit">
+                            Eliminar
+                        </button> 
+                </form>
+                      </div>
+                </td>
+                
+            </tr>
+            
+        </table>
+        
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+         
+    </body>
+</html>
